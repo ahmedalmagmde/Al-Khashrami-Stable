@@ -249,7 +249,7 @@ background:linear-gradient(90deg,rgba(22,20,18,.78) 0%,rgba(22,20,18,.45) 60%,rg
 
 <section id="gallery" style="padding-top:0"><div class="wrap rv">
 <h2>صور من الرحلات</h2><p class="sub">لقطات من جولات الضيوف في الاسطبل.</p>
-<div class="gal"><div class="ph"><img src="1.jpg" alt="" loading="lazy" onerror="this.remove()"><span>صورة 1</span></div><div class="ph"><img src="2.jpg" alt="" loading="lazy" onerror="this.remove()"><span>صورة 2</span></div><div class="ph"><img src="3.jpg" alt="" loading="lazy" onerror="this.remove()"><span>صورة 3</span></div><div class="ph"><img src="4.jpg" alt="" loading="lazy" onerror="this.remove()"><span>صورة 4</span></div><div class="ph"><img src="5.jpg" alt="" loading="lazy" onerror="this.remove()"><span>صورة 5</span></div><div class="ph"><img src="6.jpg" alt="" loading="lazy" onerror="this.remove()"><span>صورة 6</span></div><div class="ph"><img src="7.jpg" alt="" loading="lazy" onerror="this.remove()"><span>صورة 7</span></div><div class="ph"><img src="8.jpg" alt="" loading="lazy" onerror="this.remove()"><span>صورة 8</span></div><div class="ph"></div></div></section>
+<div class="gal"><div class="ph"><img src="1.jpg" data-n="1" alt="" onerror="nextExt(this)"><span>صورة 1</span></div><div class="ph"><img src="2.jpg" data-n="2" alt="" onerror="nextExt(this)"><span>صورة 2</span></div><div class="ph"><img src="3.jpg" data-n="3" alt="" onerror="nextExt(this)"><span>صورة 3</span></div><div class="ph"><img src="4.jpg" data-n="4" alt="" onerror="nextExt(this)"><span>صورة 4</span></div><div class="ph"><img src="5.jpg" data-n="5" alt="" onerror="nextExt(this)"><span>صورة 5</span></div><div class="ph"><img src="6.jpg" data-n="6" alt="" onerror="nextExt(this)"><span>صورة 6</span></div><div class="ph"><img src="7.jpg" data-n="7" alt="" onerror="nextExt(this)"><span>صورة 7</span></div><div class="ph"><img src="8.jpg" data-n="8" alt="" onerror="nextExt(this)"><span>صورة 8</span></div></div>
 </div></section>
 
 <section id="services"><div class="wrap rv">
@@ -287,7 +287,7 @@ background:linear-gradient(90deg,rgba(22,20,18,.78) 0%,rgba(22,20,18,.45) 60%,rg
 <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn wa" href="https://wa.me/966599230021" target="_blank" rel="noopener">راسلنا واتساب</a><a class="btn ghost" href="https://maps.app.goo.gl/BfgDBgTXzU2pKZjc6" target="_blank" rel="noopener">افتح الخريطة</a></div></div>
 </div></section>
 </main>
-<footer>© اسطبل الخشرمي</footer>
+<footer>2026 © اسطبل الخشرمي</footer>
 
 <script>
 // غيّر الرقم إلى رقم واتساب الاسطبل بالصيغة الدولية بدون + أو أصفار
@@ -310,6 +310,12 @@ var pr=v.play();if(pr&&pr.catch)pr.catch(function(){});
 var items=["ركوب الخيل","تعليم الفروسية","زيارات وتصوير","استضافة الخيل"],s="";
 for(var k=0;k<8;k++)items.forEach(function(x){s+="<span>"+x+"</span><i></i>"});
 document.getElementById("mq").innerHTML=s;
+
+
+// إخفاء المربعات اللي ما لها صورة، وإخفاء المعرض إذا فاضي
+function nextExt(img){var E=["jpg","jpeg","png","JPG","JPEG","PNG","webp","WEBP"],i=(+img.dataset.e||0)+1;
+if(i<E.length){img.dataset.e=i;img.src="images/"+img.dataset.n+"."+E[i]}else{img.parentNode.remove();chkGal()}}
+function chkGal(){var g=document.querySelector(".gal");if(g&&!g.children.length){var sec=document.getElementById("gallery");if(sec)sec.style.display="none"}}
 
 // ظهور الأقسام عند التمرير
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.15});
