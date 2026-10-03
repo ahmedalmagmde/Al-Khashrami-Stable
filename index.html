@@ -224,6 +224,10 @@ background:linear-gradient(90deg,rgba(22,20,18,.78) 0%,rgba(22,20,18,.45) 60%,rg
 .gal{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
 .ph{max-width:360px;width:100%}
 @media (max-width:520px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}.ph{max-width:none}}
+
+/* إخفاء الهيدر عند النزول وإظهاره عند الطلوع */
+header{transition:transform .3s ease}
+header.hide{transform:translateY(calc(-100% - env(safe-area-inset-top,0px) - 6px))}
 </style>
 </head>
 <body>
@@ -391,6 +395,16 @@ n.addEventListener("click",function(e){if(e.target.closest("a"))set(false)});
 document.addEventListener("keydown",function(e){if(e.key==="Escape")set(false)});
 document.addEventListener("click",function(e){if(!e.target.closest("header"))set(false)});
 addEventListener("resize",function(){if(innerWidth>900)set(false)});
+})();
+
+// الهيدر: يختفي مع النزول ويرجع مع الطلوع
+(function(){var h=document.querySelector("header"),n=document.getElementById("hnav"),last=window.scrollY||0;
+addEventListener("scroll",function(){var y=window.scrollY||0;
+if(n.classList.contains("open")){last=y;return}
+if(y<80||y<last-6)h.classList.remove("hide");
+else if(y>last+6)h.classList.add("hide");
+last=y},{passive:true});
+document.getElementById("burger").addEventListener("click",function(){h.classList.remove("hide")});
 })();
 </script>
 </body>
