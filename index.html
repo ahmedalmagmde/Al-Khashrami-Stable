@@ -279,7 +279,7 @@ background:linear-gradient(90deg,rgba(22,20,18,.78) 0%,rgba(22,20,18,.45) 60%,rg
 <label>الاسم<input id="name" required autocomplete="name"></label>
 <label>الخدمة<select id="svc"><option>ركوب الخيل</option><option>تعليم الفروسية</option><option>زيارة وتصوير</option><option>استضافة الخيل</option></select></label>
 <label>التاريخ<input id="date" type="date" required></label>
-<label>الوقت<input id="time" type="time" required></label>
+<label>الوقت<select id="time" required><option value="">اختر الوقت</option></select></label>
 <label>عدد الأشخاص<input id="n" type="number" min="1" value="1" required></label>
 <label>ملاحظات (اختياري)<input id="notes"></label>
 <div class="full"><button class="btn wa" type="submit">أرسل الحجز عبر واتساب</button></div>
@@ -296,6 +296,12 @@ background:linear-gradient(90deg,rgba(22,20,18,.78) 0%,rgba(22,20,18,.45) 60%,rg
 <script>
 // غيّر الرقم إلى رقم واتساب الاسطبل بالصيغة الدولية بدون + أو أصفار
 var WA_NUMBER="966599230021";
+function fillTimes(l){var sel=document.getElementById("time"),cur=sel.selectedIndex,loc=l==="en"?"en-US":"ar-SA";
+while(sel.options.length>1)sel.remove(1);
+for(var m=0;m<24*60;m+=30){var o=document.createElement("option"),dt=new Date(2000,0,1,Math.floor(m/60),m%60);
+o.textContent=dt.toLocaleTimeString(loc,{hour:"numeric",minute:"2-digit"});o.value=o.textContent;sel.appendChild(o)}
+if(cur>0)sel.selectedIndex=cur}
+fillTimes("ar");
 var d=document.getElementById("date");d.min=new Date().toISOString().split("T")[0];
 
 // عنوان يظهر كلمة كلمة
@@ -341,7 +347,7 @@ var EN={"الرئيسية":"Home","نبذة عنا":"About","صور من الإ�
 "دورة فروسية":"Riding course","عدة جلسات مع مدرب لتعلم الأساسيات.":"Several sessions with a trainer to learn the basics.",
 "احجز الباقة":"Book this package","احجز موعدك":"Book your visit",
 "عبّ النموذج وسيفتح واتساب برسالة جاهزة، وما عليك إلا الضغط على إرسال.":"Fill in the form and WhatsApp opens with a ready message. Just tap send.",
-"الاسم":"Name","الخدمة":"Service","التاريخ":"Date","الوقت":"Time","عدد الأشخاص":"Guests","ملاحظات (اختياري)":"Notes (optional)","زيارة وتصوير":"Visit & photos",
+"الاسم":"Name","الخدمة":"Service","التاريخ":"Date","الوقت":"Time","اختر الوقت":"Select time","عدد الأشخاص":"Guests","ملاحظات (اختياري)":"Notes (optional)","زيارة وتصوير":"Visit & photos",
 "أرسل الحجز عبر واتساب":"Send booking on WhatsApp","الحجز يتأكد بعد ردّ الاسطبل على رسالتك.":"Your booking is confirmed once the stable replies.",
 "التواصل والموقع":"Contact & location","راسلنا على واتساب أو افتح الموقع في خرائط قوقل للوصول بسهولة.":"Message us on WhatsApp or open the location in Google Maps.",
 "راسلنا واتساب":"Message us on WhatsApp","افتح الخريطة":"Open map","© اسطبل الخشرمي":"© Al-Khashrami Stable"};
@@ -355,7 +361,7 @@ var k=n.data.trim();if(EN[k])nodes.push({n:n,ar:n.data,k:k})}})();
 function words(t){h1.innerHTML=t.split(" ").map(function(x,i){return '<span class="w" style="animation-delay:'+(0.1+i*0.1)+'s">'+x+'</span>'}).join(" ")}
 function marquee(l){var s="";for(var k=0;k<8;k++)MQ[l].forEach(function(x){s+="<span>"+x+"</span><i></i>"});document.getElementById("mq").innerHTML=s}
 function setLang(l){
-LANG=l;var en=l==="en";
+LANG=l;var en=l==="en";fillTimes(l);
 document.documentElement.lang=l;document.documentElement.dir=en?"ltr":"rtl";
 nodes.forEach(function(o){o.n.data=en?o.ar.replace(o.k,EN[o.k]):o.ar});
 words(H1[l]);
