@@ -219,6 +219,11 @@ background:linear-gradient(90deg,rgba(22,20,18,.78) 0%,rgba(22,20,18,.45) 60%,rg
 .hero{min-height:78vh}
 .hero-shade{background:linear-gradient(180deg,rgba(22,20,18,.55) 0%,rgba(22,20,18,.8) 100%)}
 }
+
+/* المعرض: حجم ثابت للمربعات حتى لو قلّت الصور */
+.gal{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.ph{max-width:360px;width:100%}
+@media (max-width:520px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}.ph{max-width:none}}
 </style>
 </head>
 <body>
